@@ -1,4 +1,18 @@
 import Link from "next/link"
+import type { Metadata } from "next"
+ 
+export const metadata: Metadata = {
+  title: "Fastbook.space",
+  description: "Manage Event Registrations and Personal Bookings with Ease and Speed!",
+  openGraph: {
+    images: [{
+      url: "/assets/imgs/og.png",
+      width: 1200,
+      height: 630,
+      alt: "OG image"
+    }]
+  }
+}
 
 export default function page() {
   return (
