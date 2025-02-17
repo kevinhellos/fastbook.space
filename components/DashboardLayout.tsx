@@ -37,12 +37,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Link>
           </li>
 
-          <li className={`fs-sidebar-link ${pathname === "/dashboard/events" && "fs-sidebar-link-active"}`}>
+          {/* <li className={`fs-sidebar-link ${pathname === "/dashboard/events" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard/events" className="flex">
               <CalendarDays size={22} strokeWidth={1.5} className="me-2" />
               Events
             </Link>
-          </li>
+          </li> */}
 
           <li className={`fs-sidebar-link ${pathname === "/dashboard/bookings" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard/bookings" className="flex">

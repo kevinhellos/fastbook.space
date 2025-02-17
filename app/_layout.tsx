@@ -1,5 +1,6 @@
 "use client"
 
+import CenterBrandNavbar from "@/components/CenterBrandNavbar";
 // import Container from "@/components/Container";
 import Navbar from "@/components/Navbar";
 import { usePathname } from "next/navigation";
@@ -17,7 +18,12 @@ export default function Layout({ children } : { children: React.ReactNode}) {
     );
   }
   else {
-    return children;
+    return (
+      <>
+        <CenterBrandNavbar/>
+        {children}
+      </>
+    );
   }
 
 }

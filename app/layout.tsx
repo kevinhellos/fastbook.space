@@ -15,7 +15,7 @@ import Layout from "./_layout";
 
 export const metadata: Metadata = {
   title: "Fastbook.space",
-  description: "Manage Event Registrations and Personal Bookings with Ease and Speed!",
+  description: "Manage Personal Bookings with Ease and Speed!",
 };
 
 export default function RootLayout({

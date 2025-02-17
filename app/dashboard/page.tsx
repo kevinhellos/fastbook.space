@@ -2,9 +2,10 @@
 
 import { auth } from "@/config/firebase";
 import { useCreateUserAccount } from "@/hooks/users/useCreateUserAccount";
+import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
 import { BookUser, CalendarDays } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function page() {
 
@@ -32,6 +33,19 @@ export default function page() {
         createUserAccountIfNotExists();
     }, []);
 
+    const getAllHostBookings = useGetAllHostBookings;
+    const [bookings, setBookings] = useState<any[]>([]);
+
+    async function loadAllHostBookings() {
+      const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
+      if (bookings) {
+        setBookings(bookings);
+      }
+    }
+    useEffect(() => {
+      loadAllHostBookings();
+    }, []);
+
     return (
         <>
             
@@ -47,15 +61,15 @@ export default function page() {
                     Create event
                 </Link> */}
 
-          <div className="px-3.5 py-2 rounded-sm bg-purple-100 border-l-2 border-l-purple-700 mt-5 text-sm">
-            Page is under maintenance. Check back later.
-          </div>
+            <div className="px-3.5 py-2 rounded-sm bg-purple-100 border-l-2 border-l-purple-700 mt-5 text-sm">
+                Page is under maintenance. Check back later.
+            </div>
 
             {/* </div> */}
 
             <div className="grid lg:grid-cols-3 lg:gap-5 gap-3 md:grid-cols-2 sm:grid-cols-1 mt-5">
 
-                <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
+                {/* <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
                     <h2 className="text-center text-4xl">0</h2>
                     <h3 className="flex text-xl mt-3 justify-center">
                         <CalendarDays
@@ -65,10 +79,12 @@ export default function page() {
                         />
                         Events
                     </h3>
-                </div>
+                </div> */}
 
                 <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
-                    <h2 className="text-center text-4xl">0</h2>
+                    <h2 className="text-center text-4xl">
+                        {bookings?.length}
+                    </h2>
                     <h3 className="flex text-xl mt-3 justify-center">
                         <BookUser
                             size={22}

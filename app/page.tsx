@@ -3,7 +3,7 @@ import type { Metadata } from "next"
  
 export const metadata: Metadata = {
   title: "Fastbook.space",
-  description: "Manage Event Registrations and Personal Bookings with Ease and Speed!",
+  description: "Manage Personal Bookings with Ease and Speed!",
   openGraph: {
     images: [{
       url: "/assets/imgs/og.png",
@@ -19,34 +19,35 @@ export default function page() {
     <>
       <div className="text-center mt-[10vh]">
         <h1 className="lg:text-4xl text-2xl font-medium mb-5">
-          Manage Event Registrations <br />
-          and Personal Bookings <br />
+          Manage Personal Bookings <br />
           with <span className="underline text-blue-700">Ease and Speed!</span>
         </h1>
         <p className="max-w-md mx-auto mb-5">
           Quick and effortless all in one booking system, <br />
-          a seamless experience for both organizers and attendees.
+          for a seamless experience
         </p>
 
         <div className="flex mx-auto justify-center gap-3">
           <Link
-            href="/events/create"
+            href="/dashboard"
             className="fs-btn-primary"
           >
-            Create an event
+            Get started
           </Link>
-          <Link
-            href="/events/create"
-            className="fs-btn-secondary"
-          >
-            Join event
-          </Link>
+          {/* 
+            <Link
+              href="/events/create"
+              className="fs-btn-secondary"
+            >
+              Join event
+            </Link> 
+          */}
         </div>
 
         <img 
           src="/assets/imgs/landing.svg" 
           alt="Man writing on a calendar" 
-          className="mx-auto mt-10 w-60 lg:w-96"
+          className="mx-auto mt-10 w-72 lg:w-96"
         />
         
       </div>
