@@ -13,7 +13,8 @@ export default function page() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      user ? router.push("/dashboard") : router.push("/login")
+      // user ? router.push("/dashboard") : router.push("/login")
+      user && router.push("/dashboard");
     });
     return () => unsubscribe();
   }, [router]);

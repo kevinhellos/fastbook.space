@@ -1,30 +1,13 @@
 "use client"
 
+import { AvailableBadge, UnavailableBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import { useCreateNewBooking } from "@/hooks/users/useCreateNewBooking";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
 import { CalendarCheck, CalendarPlus, CalendarX } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-
-export function AvailableBadge() {
-    return (
-        <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md font-medium flex w-fit">
-            <CalendarCheck size={18} strokeWidth={1.5} className="me-1" />
-            Available
-        </span>
-    );
-}
-
-export function UnavailableBadge() {
-    return (
-        <span className="bg-red-50 text-red-700 px-2 py-1 rounded-md font-medium flex w-fit">
-            <CalendarX size={18} strokeWidth={1.5} className="me-1" />
-            Unavailable
-        </span>
-    );
-  }
 
 export default function Pageclient({ uid } : { uid: string }) {
 
@@ -45,7 +28,7 @@ export default function Pageclient({ uid } : { uid: string }) {
     const [createBookingIsLoading, setCreateBookingIsLoading] = useState<boolean>(false);
     const [hasError, setHasError] = useState<string|null>(null);
 
-    const router = useRouter();
+    // const router = useRouter();
     
     async function loadHostDetails() {
         const hostDetail = await getHostDetail(uid);
@@ -141,7 +124,7 @@ export default function Pageclient({ uid } : { uid: string }) {
                             <tbody>
                                 <tr>
                                     <td>Monday</td>
-                                    <td>{host.mondayAvailable ? <AvailableBadge/> : <UnavailableBadge/>}</td>
+                                    <td></td>
                                     <td>{host.mondayAvailable && host.mondayCustomTime}</td>
                                 </tr>
                                 <tr>
@@ -180,28 +163,21 @@ export default function Pageclient({ uid } : { uid: string }) {
 
                     {/* Only show the book button if at least 1 day is available */}
                     {noOfAvailableDays >= 1 ? (
-                        <button 
-                            type="button"
-                            className="fs-btn-primary w-full flex justify-center"
-                            onClick={() => {
-                                //  toast.error("Booking error\nBooking is currently not allowed", { position: "top-center", duration: 3000 });
-                                bookingModal?.current?.showModal();
-                            }}
-                        >
-                            <CalendarPlus size={22} strokeWidth={1.5} className="me-2" />
-                            Book now
-                        </button>
-                    ) : (
-                        <button 
-                            type="button"
-                            className="fs-btn-plain w-full"
-                        >
-                            No timeslot is currently available for booking
-                        </button>
-                    )}
-                </div>
-
-                <dialog id="booking_modal" ref={bookingModal} className="modal modal-bottom sm:modal-middle">
+                        <>
+                            <button 
+                                type="button"
+                                className="fs-btn-primary w-full flex justify-center"
+                                onClick={() => {
+                                    //  toast.error("Booking error\nBooking is currently not allowed", { position: "top-center", duration: 3000 });
+                                    loadHostDetails();
+                                    bookingModal?.current?.showModal();
+                                }}
+                            >
+                                <CalendarPlus size={22} strokeWidth={1.5} className="me-2" />
+                                Book now
+                            </button>
+                        
+                            <dialog id="booking_modal" ref={bookingModal} className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box rounded-sm p-7">
                         <h3 className="font-medium text-xl">Book a slot</h3>
                         <p className="py-4 text-sm">Please fill up the following information to complete your booking</p>
@@ -283,7 +259,18 @@ export default function Pageclient({ uid } : { uid: string }) {
                             </button>
                         </div>
                     </div>
-                </dialog>
+                            </dialog>
+                        </>
+                    ) : (
+                        <button 
+                            type="button"
+                            className="fs-btn-plain w-full"
+                        >
+                            No timeslot is currently available for booking
+                        </button>
+                    )}
+                </div>
+
             </>
         );
     }

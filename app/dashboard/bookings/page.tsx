@@ -1,6 +1,7 @@
 "use client"
 
 import AvailabilitySettings from "@/components/AvailabilitySettings";
+import { ApprovedBadge, PendingBadge, RejectedBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import { auth } from "@/config/firebase";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
@@ -72,7 +73,7 @@ export default function page() {
         </> 
       ) : (
           <div className="overflow-x-auto mt-5">
-            <table className="table border-t">
+            <table className="table border-t border-b">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="font-medium text-black">Name</th>
@@ -90,7 +91,11 @@ export default function page() {
                   <td>{booking.contact}</td>
                   <td>{booking.date}</td>
                   <td>{booking.time}</td>
-                  <td>{booking.status}</td>
+                  <td>
+                    {booking.status == "Approved" && <ApprovedBadge/>}
+                    {booking.status == "Pending" && <PendingBadge/>}
+                    {booking.status == "Rejected" && <RejectedBadge/>}
+                  </td>
                   <td>{booking.createdOn}</td>
                 </tr>
                 ))}

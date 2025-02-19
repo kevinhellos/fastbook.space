@@ -1,6 +1,5 @@
 "use client"
 
-import { AvailableBadge, UnavailableBadge } from "@/app/u/[uid]/page.client";
 import { auth } from "@/config/firebase";
 import { useEditUserCustomTime } from "@/hooks/users/useEditUserCustomTime";
 import { useEditUserDayAvailability } from "@/hooks/users/useEditUserDayAvailability";
@@ -9,6 +8,7 @@ import { CalendarCog, Laptop } from "lucide-react";
 // import Link from "next/link";
 import { useEffect, useRef, useState } from "react"
 import toast, { Toaster } from "react-hot-toast";
+import { AvailableBadge, UnavailableBadge } from "./Badges";
 
 export default function AvailabilitySettings() {
 

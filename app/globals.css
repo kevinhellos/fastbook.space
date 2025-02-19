@@ -43,7 +43,7 @@ body {
 }
 .fs-btn-plain {
   @apply
-  fs-btn border hover:bg-blue-50
+  fs-btn border hover:bg-blue-50/55 hover:text-blue-700
 }
 
 .fs-sidebar-link {
@@ -56,8 +56,12 @@ body {
 }
 
 .fs-input {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+.fs-input {
   @apply
-  border px-3.5 py-2 rounded-md cursor-pointer hover:bg-gray-50
+  border px-3.5 py-2 rounded-md cursor-pointer hover:bg-gray-50 h-10 bg-white
 }
 
 .modal-box {

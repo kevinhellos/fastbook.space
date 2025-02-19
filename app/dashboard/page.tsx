@@ -34,7 +34,7 @@ export default function page() {
     }, []);
 
     const getAllHostBookings = useGetAllHostBookings;
-    const [bookings, setBookings] = useState<any[]>([]);
+    const [bookings, setBookings] = useState<any>(null);
 
     async function loadAllHostBookings() {
       const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
@@ -61,9 +61,9 @@ export default function page() {
                     Create event
                 </Link> */}
 
-            <div className="px-3.5 py-2 rounded-sm bg-purple-100 border-l-2 border-l-purple-700 mt-5 text-sm">
+            {/* <div className="px-3.5 py-2 rounded-sm bg-purple-100 border-l-2 border-l-purple-700 mt-5 text-sm">
                 Page is under maintenance. Check back later.
-            </div>
+            </div> */}
 
             {/* </div> */}
 
@@ -83,7 +83,8 @@ export default function page() {
 
                 <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
                     <h2 className="text-center text-4xl">
-                        {bookings?.length}
+                        {bookings?.length !== null && bookings?.length }
+                        {bookings?.length == null && <span className="loading loading-dots loading-md text-blue-700"></span>}
                     </h2>
                     <h3 className="flex text-xl mt-3 justify-center">
                         <BookUser
