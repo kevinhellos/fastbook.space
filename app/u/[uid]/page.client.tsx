@@ -4,8 +4,8 @@ import { AvailableBadge, UnavailableBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import { useCreateNewBooking } from "@/hooks/users/useCreateNewBooking";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
-import { CalendarCheck, CalendarPlus, CalendarX } from "lucide-react";
-// import { useRouter } from "next/navigation";
+import { CalendarPlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -28,7 +28,7 @@ export default function Pageclient({ uid } : { uid: string }) {
     const [createBookingIsLoading, setCreateBookingIsLoading] = useState<boolean>(false);
     const [hasError, setHasError] = useState<string|null>(null);
 
-    // const router = useRouter();
+    const router = useRouter();
     
     async function loadHostDetails() {
         const hostDetail = await getHostDetail(uid);
@@ -70,6 +70,7 @@ export default function Pageclient({ uid } : { uid: string }) {
     }
 
     async function createBooking() {
+        // loadHostDetails();
         setCreateBookingIsLoading(true);
         setHasError(null); // Reset the error on every submit
 
@@ -83,10 +84,10 @@ export default function Pageclient({ uid } : { uid: string }) {
                 setTime("");
                 setCreateBookingIsLoading(false);
                 bookingModal?.current?.close();
-                // router.push(`/booking/${bookingId}`);
+                router.push(`/booking-confirmation/${bookingId}`);
 
                 // TODO: refactor this
-                alert(`Your booking has been confirmed !\nBooking reference code: ${bookingId}\nName: ${name}\nContact: ${contact}\nDate: ${date}\nTime: ${time}\nThank you`);
+                // alert(`Your booking has been confirmed !\nBooking reference code: ${bookingId}\nName: ${name}\nContact: ${contact}\nDate: ${date}\nTime: ${time}\nThank you`);
             }
         }
         else {
@@ -108,7 +109,7 @@ export default function Pageclient({ uid } : { uid: string }) {
             <>
                 <Toaster/>
                 <div className="mx-auto max-w-2xl border rounded-md mt-0 p-3">
-                    <h1 className="text-sm text-center font-medium mt-5">
+                    <h1 className="text-sm text-center font-medium mt-3">
                         Make a Booking for
                     </h1>
                     <img 
@@ -124,7 +125,7 @@ export default function Pageclient({ uid } : { uid: string }) {
                             <tbody>
                                 <tr>
                                     <td>Monday</td>
-                                    <td></td>
+                                    <td>{host.mondayAvailable ? <AvailableBadge/> : <UnavailableBadge/>}</td>
                                     <td>{host.mondayAvailable && host.mondayCustomTime}</td>
                                 </tr>
                                 <tr>
@@ -270,7 +271,6 @@ export default function Pageclient({ uid } : { uid: string }) {
                         </button>
                     )}
                 </div>
-
             </>
         );
     }

@@ -9,7 +9,7 @@ export default function Layout({ children } : { children: React.ReactNode}) {
 
   const pathname = usePathname();
 
-  if (!pathname.includes("/u/")) {
+  if (!pathname.includes("/u/") && !pathname.includes("/booking-confirmation/")) {
     return (
       <>
         <Navbar/>
@@ -17,6 +17,16 @@ export default function Layout({ children } : { children: React.ReactNode}) {
       </>
     );
   }
+
+  if (pathname.includes("/booking-confirmation/")) {
+    return (
+      <>
+        <CenterBrandNavbar/>
+        {children}
+      </>
+    );
+  }
+
   else {
     return (
       <>

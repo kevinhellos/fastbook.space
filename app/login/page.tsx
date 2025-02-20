@@ -3,13 +3,14 @@
 import { auth } from "@/config/firebase";
 import { useSignInWithGoogle } from "@/hooks/auth/useSignInWithGoogle";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function page() {
 
   const signInWithGoogle = useSignInWithGoogle;
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

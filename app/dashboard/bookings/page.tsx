@@ -6,6 +6,7 @@ import CenterLoader from "@/components/CenterLoader";
 import { auth } from "@/config/firebase";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
 import { Laptop } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function page() {
@@ -76,6 +77,7 @@ export default function page() {
             <table className="table border-t border-b">
               <thead className="bg-gray-50">
                 <tr>
+                  <th className="font-medium text-black">Id</th>
                   <th className="font-medium text-black">Name</th>
                   <th className="font-medium text-black">Contact (email/ mobile phone)</th>
                   <th className="font-medium text-black">Booking date</th>
@@ -87,6 +89,15 @@ export default function page() {
               <tbody>
                 {bookings.map((booking, index) => (
                 <tr key={index}>
+                  <td>
+                    <Link 
+                      href={`/booking-confirmation/${booking.id}?mode=host`}
+                      className="underline hover:text-blue-700"
+                      target="_blank"
+                    >
+                      {booking?.id}
+                    </Link>
+                  </td>
                   <td>{booking.name}</td>
                   <td>{booking.contact}</td>
                   <td>{booking.date}</td>

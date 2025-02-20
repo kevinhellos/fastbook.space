@@ -4,7 +4,7 @@ import { auth } from "@/config/firebase";
 import { useCreateUserAccount } from "@/hooks/users/useCreateUserAccount";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
-import { BookUser, CalendarDays } from "lucide-react";
+import { BookUser } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function page() {
