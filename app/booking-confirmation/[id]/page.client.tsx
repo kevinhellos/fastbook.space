@@ -6,7 +6,7 @@ import useGetBookingDetailsById from "@/hooks/bookings/useGetBookingDetailsById"
 import { CheckCircle } from "lucide-react"
 // import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Pageclient({ id } : { id: string }) {
@@ -36,6 +36,7 @@ export default function Pageclient({ id } : { id: string }) {
   if (bookingDetails !== null) {
     return (
       <>
+        <Suspense>
         <div className="mx-auto h-auto max-w-2xl border border-t-green-700 border-t-2 rounded-md mt-0 p-3">
           <span className="flex justify-center mt-3">
             <CheckCircle
@@ -135,7 +136,7 @@ export default function Pageclient({ id } : { id: string }) {
             Viewing as a User
           </div>
         )}
-
+        </Suspense>
       </>
     )
   }
