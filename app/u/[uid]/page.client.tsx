@@ -85,7 +85,6 @@ export default function Pageclient({ uid } : { uid: string }) {
                 setCreateBookingIsLoading(false);
                 bookingModal?.current?.close();
                 router.push(`/booking-confirmation/${bookingId}`);
-
                 // TODO: refactor this
                 // alert(`Your booking has been confirmed !\nBooking reference code: ${bookingId}\nName: ${name}\nContact: ${contact}\nDate: ${date}\nTime: ${time}\nThank you`);
             }

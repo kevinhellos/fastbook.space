@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Layout from "./_layout";
+import { appConfig } from "@/config/app";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -14,8 +15,8 @@ import Layout from "./_layout";
 // });
 
 export const metadata: Metadata = {
-  title: "Fastbook.space",
-  description: "Manage Personal Bookings with Ease and Speed!",
+  title: appConfig.title,
+  description: appConfig.description,
 };
 
 export default function RootLayout({

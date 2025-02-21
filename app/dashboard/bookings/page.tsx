@@ -4,14 +4,17 @@ import AvailabilitySettings from "@/components/AvailabilitySettings";
 import { ApprovedBadge, PendingBadge, RejectedBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import { auth } from "@/config/firebase";
+import useUpdateBookingStatusById from "@/hooks/bookings/useUpdateBookingStatusById";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
-import { Laptop } from "lucide-react";
+import { Laptop, Trash } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function page() {
 
   const getAllHostBookings = useGetAllHostBookings;
+  const updateBookingStatusById = useUpdateBookingStatusById;
 
   const [bookings, setBookings] = useState<any[]>([]);
   const [bookingIsLoading, setBookingIsLoading] = useState<boolean>(false);
@@ -50,7 +53,7 @@ export default function page() {
           href={`/u/${auth?.currentUser?.uid}`}
           target="_blank"
         >
-          <Laptop size={22} strokeWidth={1.5} className="me-2" />
+          <Laptop size={20} strokeWidth={1.5} className="me-2" />
           Booking page
         </a>
       </div>
@@ -73,17 +76,20 @@ export default function page() {
           )}
         </> 
       ) : (
+        <>
+          <Toaster/>
           <div className="overflow-x-auto mt-5">
             <table className="table border-t border-b">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="font-medium text-black">Id</th>
-                  <th className="font-medium text-black">Name</th>
-                  <th className="font-medium text-black">Contact (email/ mobile phone)</th>
-                  <th className="font-medium text-black">Booking date</th>
-                  <th className="font-medium text-black">Booking time</th>
-                  <th className="font-medium text-black">Status</th>
+                  <th className="font-medium text-black">Booking page</th>
                   <th className="font-medium text-black">Created on</th>
+                  <th className="font-medium text-black">Name</th>
+                  <th className="font-medium text-black">Contact </th>
+                  <th className="font-medium text-black">Date</th>
+                  <th className="font-medium text-black">Time</th>
+                  <th className="font-medium text-black">Status</th>
+                  {/* <th className="font-medium text-black text-center">Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -95,24 +101,52 @@ export default function page() {
                       className="underline hover:text-blue-700"
                       target="_blank"
                     >
-                      {booking?.id}
+                      View
                     </Link>
                   </td>
+                  <td>{booking.createdOn}</td>
                   <td>{booking.name}</td>
                   <td>{booking.contact}</td>
                   <td>{booking.date}</td>
                   <td>{booking.time}</td>
                   <td>
-                    {booking.status == "Approved" && <ApprovedBadge/>}
+                    {/* {booking.status == "Approved" && <ApprovedBadge/>}
                     {booking.status == "Pending" && <PendingBadge/>}
-                    {booking.status == "Rejected" && <RejectedBadge/>}
+                    {booking.status == "Rejected" && <RejectedBadge/>} */}
+                    <select 
+                      className={`fs-btn-plain font-medium
+                        ${booking.status == "Pending" && "bg-yellow-50 text-yellow-700"}
+                        ${booking.status == "Approved" && "bg-green-50 text-green-700"}
+                        ${booking.status == "Rejected" && "bg-red-50 text-red-700"}
+                      `}
+                      value={booking.status}
+                      onChange={async(e) => {
+                        toast.loading("Updating booking status", { duration: 1000 })
+                        await updateBookingStatusById(booking.id, e.target.value)
+                        .then(() => {
+                          loadAllHostBookings();
+                        })
+                      }}
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </td>
-                  <td>{booking.createdOn}</td>
+                  {/* <td className="flex gap-2">
+                    <button className="fs-btn-plain">
+                      <Trash
+                        size={20}
+                        strokeWidth={1.5}
+                      />
+                    </button>
+                  </td> */}
                 </tr>
                 ))}
               </tbody>
             </table>
           </div>
+        </>
       )}
 
     </>

@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Sidebar content here */}
           <li className={`fs-sidebar-link ${pathname === "/dashboard" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard" className="flex" onClick={() => drawerRef?.current?.click()}>
-              <Blocks size={22} strokeWidth={1.5} className="me-2" />
+              <Blocks size={20} strokeWidth={1.5} className="me-2" />
               Dashboard
             </Link>
           </li>
@@ -52,14 +52,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
           <li className={`fs-sidebar-link ${pathname === "/dashboard/bookings" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard/bookings" className="flex" onClick={() => drawerRef?.current?.click()}>
-              <BookUser size={22} strokeWidth={1.5} className="me-2" />
+              <BookUser size={20} strokeWidth={1.5} className="me-2" />
               Bookings
             </Link>
           </li>
 
           <li className={`fs-sidebar-link ${pathname === "/dashboard/profile" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard/profile" className="flex" onClick={() => drawerRef?.current?.click()}>
-              <User size={22} strokeWidth={1.5} className="me-2" />
+              <User size={20} strokeWidth={1.5} className="me-2" />
               Profile
             </Link>
           </li>
