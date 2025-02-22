@@ -2,12 +2,12 @@
 
 import { AvailableBadge, UnavailableBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
-import { useCreateNewBooking } from "@/hooks/users/useCreateNewBooking";
+import { useCreateNewBooking } from "@/hooks/bookings/useCreateNewBooking";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
 import { CalendarPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export default function Pageclient({ uid } : { uid: string }) {
 
@@ -85,8 +85,6 @@ export default function Pageclient({ uid } : { uid: string }) {
                 setCreateBookingIsLoading(false);
                 bookingModal?.current?.close();
                 router.push(`/booking-confirmation/${bookingId}`);
-                // TODO: refactor this
-                // alert(`Your booking has been confirmed !\nBooking reference code: ${bookingId}\nName: ${name}\nContact: ${contact}\nDate: ${date}\nTime: ${time}\nThank you`);
             }
         }
         else {
@@ -107,7 +105,7 @@ export default function Pageclient({ uid } : { uid: string }) {
         return (
             <>
                 <Toaster/>
-                <div className="mx-auto max-w-2xl border rounded-md mt-0 p-3">
+                <div className="mx-auto max-w-2xl border rounded-md mt-0 p-3 shadow-md">
                     <h1 className="text-sm text-center font-medium mt-3">
                         Make a Booking for
                     </h1>

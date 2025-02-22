@@ -20,8 +20,9 @@ export async function useGetAllHostBookings(currentHostId: string) {
         // Filter all bookings to only contain bookings with hostId matching currentHostId
         bookings = bookings.filter((booking: any) => booking.hostId === currentHostId);
     } 
-    catch (err) {
-        console.error(`Error: failed to get all expenses from the database\n${err}`);
+    catch (error: any) {
+        console.error(`Error: failed to get all expenses from the database\n${error}`);
     }
+    
     return bookings;
 }

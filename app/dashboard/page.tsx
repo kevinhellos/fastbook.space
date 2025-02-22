@@ -11,6 +11,7 @@ export default function page() {
 
     const getUserDetailsByUid = useGetUserDetailsByUid;
     const createUserAccount = useCreateUserAccount;
+    const getAllHostBookings = useGetAllHostBookings;
 
     // Create a user if the current user uid is not in the users collection
     async function createUserAccountIfNotExists() {
@@ -24,16 +25,12 @@ export default function page() {
                 auth?.currentUser?.photoURL!
             );
         }
-        // else {
-        //     console.log("User already exists");
-        // }
     }
 
     useEffect(() => {
         createUserAccountIfNotExists();
     }, []);
 
-    const getAllHostBookings = useGetAllHostBookings;
     const [bookings, setBookings] = useState<any>(null);
 
     async function loadAllHostBookings() {
@@ -48,18 +45,10 @@ export default function page() {
 
     return (
         <>
-            
             {/* <div className="flex justify-between"> */}
                 <h1 className="lg:text-3xl text-2xl font-medium">
                     Hello {auth?.currentUser?.displayName}
                 </h1>
-
-                {/* <Link
-                    href="/dashboard/create-event"
-                    className="fs-btn-primary float-end"
-                >
-                    Create event
-                </Link> */}
 
             {/* <div className="px-3.5 py-2 rounded-sm bg-purple-100 border-l-2 border-l-purple-700 mt-5 text-sm">
                 Page is under maintenance. Check back later.
@@ -81,7 +70,7 @@ export default function page() {
                     </h3>
                 </div> */}
 
-                <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
+                <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer shadow-md">
                     <h2 className="text-center text-4xl">
                         {bookings?.length !== null && bookings?.length }
                         {bookings?.length == null && <span className="loading loading-dots loading-md text-blue-700"></span>}

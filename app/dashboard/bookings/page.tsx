@@ -1,11 +1,12 @@
 "use client"
 
 import AvailabilitySettings from "@/components/AvailabilitySettings";
-import { ApprovedBadge, PendingBadge, RejectedBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import { auth } from "@/config/firebase";
+import { useDeleteBookingById } from "@/hooks/bookings/useDeleteBookingById";
 import useUpdateBookingStatusById from "@/hooks/bookings/useUpdateBookingStatusById";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
+import { Booking } from "@/interfaces";
 import { Laptop, Trash } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,8 +16,9 @@ export default function page() {
 
   const getAllHostBookings = useGetAllHostBookings;
   const updateBookingStatusById = useUpdateBookingStatusById;
+  const deleteBookingById = useDeleteBookingById;
 
-  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingIsLoading, setBookingIsLoading] = useState<boolean>(false);
 
   async function loadAllHostBookings() {
@@ -78,7 +80,7 @@ export default function page() {
       ) : (
         <>
           <Toaster/>
-          <div className="overflow-x-auto mt-5">
+          <div className="overflow-x-auto mt-5 shadow-md">
             <table className="table border-t border-b">
               <thead className="bg-gray-50">
                 <tr>
@@ -89,7 +91,7 @@ export default function page() {
                   <th className="font-medium text-black">Date</th>
                   <th className="font-medium text-black">Time</th>
                   <th className="font-medium text-black">Status</th>
-                  {/* <th className="font-medium text-black text-center">Action</th> */}
+                  <th className="font-medium text-black">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -110,9 +112,6 @@ export default function page() {
                   <td>{booking.date}</td>
                   <td>{booking.time}</td>
                   <td>
-                    {/* {booking.status == "Approved" && <ApprovedBadge/>}
-                    {booking.status == "Pending" && <PendingBadge/>}
-                    {booking.status == "Rejected" && <RejectedBadge/>} */}
                     <select 
                       className={`fs-btn-plain font-medium
                         ${booking.status == "Pending" && "bg-yellow-50 text-yellow-700"}
@@ -121,8 +120,8 @@ export default function page() {
                       `}
                       value={booking.status}
                       onChange={async(e) => {
-                        toast.loading("Updating booking status", { duration: 1000 })
-                        await updateBookingStatusById(booking.id, e.target.value)
+                        toast.loading("Updating booking status", { duration: 1000 });
+                        await updateBookingStatusById(booking.id!, e.target.value)
                         .then(() => {
                           loadAllHostBookings();
                         })
@@ -133,14 +132,25 @@ export default function page() {
                       <option value="Rejected">Rejected</option>
                     </select>
                   </td>
-                  {/* <td className="flex gap-2">
-                    <button className="fs-btn-plain">
+                  <td className="flex gap-2">
+                    <button 
+                      type="button" 
+                      className="fs-btn-plain hover:bg-red-50 hover:text-red-700"
+                      onClick={async() => {
+                        toast.loading("Deleting...", { duration: 1000 })
+                        await deleteBookingById(booking.id!)
+                        .then(() => {
+                          toast.success(`Booking id ${booking.id} by ${booking.name} deleted`);
+                          loadAllHostBookings(); // Refetch the data
+                        })
+                      }}
+                    >
                       <Trash
                         size={20}
                         strokeWidth={1.5}
                       />
                     </button>
-                  </td> */}
+                  </td>
                 </tr>
                 ))}
               </tbody>

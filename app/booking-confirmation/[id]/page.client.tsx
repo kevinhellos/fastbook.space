@@ -37,7 +37,7 @@ export default function Pageclient({ id } : { id: string }) {
     return (
       <>
         <Suspense>
-        <div className="mx-auto h-auto max-w-2xl border border-t-green-700 border-t-2 rounded-md mt-0 p-3">
+        <div className="mx-auto h-auto max-w-2xl border border-t-green-700 border-t-2 rounded-md mt-0 p-3 shadow-md">
           <span className="flex justify-center mt-3">
             <CheckCircle
               size={30}
