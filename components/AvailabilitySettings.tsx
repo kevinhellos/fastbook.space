@@ -34,6 +34,7 @@ export default function AvailabilitySettings() {
 
   const getUserCurrentDayAvailability = useGetUserCurrentDayAvailability;
   const editUserCustomTime = useEditUserCustomTime;
+  const editUserDayAvailability = useEditUserDayAvailability;
 
   async function loadUserCurrentDayAvailability() {
     const availability = await getUserCurrentDayAvailability(auth?.currentUser?.uid!);
@@ -57,8 +58,6 @@ export default function AvailabilitySettings() {
       setSundayCustomTime(availability.sundayCustomTime);
     }
   }
-
-  const editUserDayAvailability = useEditUserDayAvailability;
 
   useEffect(() => {
     loadUserCurrentDayAvailability();
