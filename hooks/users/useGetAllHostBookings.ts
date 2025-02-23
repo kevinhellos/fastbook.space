@@ -12,6 +12,7 @@ export async function useGetAllHostBookings(currentHostId: string) {
             contact: doc.data().contact,
             date: doc.data().date,
             time: doc.data().time,
+            purpose: doc.data().purpose,
             hostId: doc.data().hostId,
             status: doc.data().status,
             commentByHost: doc.data().commentByHost,

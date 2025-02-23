@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           ref={drawerRef}
         ></label>
         <ul className="border-r min-h-full bg-white w-64 p-4">
-          {/* Sidebar content here */}
+
           <li className={`fs-sidebar-link ${pathname === "/dashboard" && "fs-sidebar-link-active"}`}>
             <Link href="/dashboard" className="flex" onClick={() => drawerRef?.current?.click()}>
               <Blocks size={20} strokeWidth={1.5} className="me-2" />

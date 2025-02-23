@@ -1,9 +1,11 @@
 "use client";
 
+import DashboardCard from "@/components/DashboardCard";
 import { auth } from "@/config/firebase";
 import { useCreateUserAccount } from "@/hooks/users/useCreateUserAccount";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
 import useGetUserDetailsByUid from "@/hooks/users/useGetUserDetailsByUid";
+import { Booking } from "@/interfaces";
 import { BookUser } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -17,6 +19,7 @@ export default function page() {
     async function createUserAccountIfNotExists() {
         const user = await getUserDetailsByUid(auth?.currentUser?.uid!);
         
+        // If the user does not exists, create an account
         if (user === null) {
             createUserAccount(
                 auth?.currentUser?.uid!,
@@ -31,7 +34,7 @@ export default function page() {
         createUserAccountIfNotExists();
     }, []);
 
-    const [bookings, setBookings] = useState<any>(null);
+    const [bookings, setBookings] = useState<Booking[]|null>(null);
 
     async function loadAllHostBookings() {
       const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
@@ -58,19 +61,20 @@ export default function page() {
 
             <div className="grid lg:grid-cols-3 lg:gap-5 gap-3 md:grid-cols-2 sm:grid-cols-1 mt-5">
 
-                {/* <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer">
-                    <h2 className="text-center text-4xl">0</h2>
-                    <h3 className="flex text-xl mt-3 justify-center">
-                        <CalendarDays
-                            size={22}
-                            strokeWidth={1.5}
-                            className="text-blue-700 mt-[.2rem] me-2"
-                        />
-                        Events
-                    </h3>
-                </div> */}
+                {/* <DashboardCard>
+                        <h2 className="text-center text-4xl">0</h2>
+                        <h3 className="flex text-xl mt-3 justify-center">
+                            <CalendarDays
+                                size={22}
+                                strokeWidth={1.5}
+                                className="text-blue-700 mt-[.2rem] me-2"
+                            />
+                            Events
+                        </h3>
+                    </DashboardCard> 
+                */}
 
-                <div className="border px-3 py-5 rounded-md hover:bg-blue-50 cursor-pointer shadow-md">
+                <DashboardCard>
                     <h2 className="text-center text-4xl">
                         {bookings?.length !== null && bookings?.length }
                         {bookings?.length == null && <span className="loading loading-dots loading-md text-blue-700"></span>}
@@ -83,7 +87,7 @@ export default function page() {
                         />
                         Bookings
                     </h3>
-                </div>
+                </DashboardCard>
 
             </div>
         </>

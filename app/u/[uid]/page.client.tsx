@@ -15,7 +15,7 @@ export default function Pageclient({ uid } : { uid: string }) {
     const createNewBooking = useCreateNewBooking;
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [host, setdost] = useState<any>([]);
+    const [host, setHost] = useState<any>([]);
     const [noOfAvailableDays, setNoOfAvailableDays] = useState<number>(0);
 
     const bookingModal = useRef<HTMLDialogElement>(null);
@@ -24,6 +24,7 @@ export default function Pageclient({ uid } : { uid: string }) {
     const [contact, setContact] = useState<string>("");
     const [date, setDate] = useState<string>("");
     const [time, setTime] = useState<string>("");
+    const [purpose, setPurpose] = useState<string>("");
 
     const [createBookingIsLoading, setCreateBookingIsLoading] = useState<boolean>(false);
     const [hasError, setHasError] = useState<string|null>(null);
@@ -36,7 +37,7 @@ export default function Pageclient({ uid } : { uid: string }) {
 
         if (hostDetail !== null) {
             // console.log(hostDetail);
-            setdost(hostDetail);
+            setHost(hostDetail);
 
             if (hostDetail.mondayAvailable) {
                 noOfAvailableDays++;
@@ -74,14 +75,15 @@ export default function Pageclient({ uid } : { uid: string }) {
         setCreateBookingIsLoading(true);
         setHasError(null); // Reset the error on every submit
 
-        if (name !== "" && contact !== "" && date !== "" && time !== "") {
-            const bookingId: string = await createNewBooking(name, contact, date, time, uid);
+        if (name !== "" && contact !== "" && date !== "" && time !== "" && purpose !== "") {
+            const bookingId: string = await createNewBooking(name, contact, date, time, purpose, uid);
             if (bookingId) {
                 setHasError(null);
                 setName("");
                 setContact("");
                 setDate("");
                 setTime("");
+                setPurpose("");
                 setCreateBookingIsLoading(false);
                 bookingModal?.current?.close();
                 router.push(`/booking-confirmation/${bookingId}`);
@@ -176,87 +178,97 @@ export default function Pageclient({ uid } : { uid: string }) {
                             </button>
                         
                             <dialog id="booking_modal" ref={bookingModal} className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box rounded-sm p-7">
-                        <h3 className="font-medium text-xl">Book a slot</h3>
-                        <p className="py-4 text-sm">Please fill up the following information to complete your booking</p>
+                                <div className="modal-box rounded-sm p-7">
+                                    <h3 className="font-medium text-xl">Book a slot</h3>
+                                    <p className="py-4 text-sm">Please fill up the following information to complete your booking</p>
 
-                        <div className="px-3.5 py-2 rounded-sm bg-blue-50 border-l-2 border-l-blue-700 mb-5 text-sm">
-                            Bookings made outside the availability timing will be <span className="font-medium">cancelled</span> 
-                        </div>
+                                    <div className="px-3.5 py-2 rounded-sm bg-blue-50 border-l-2 border-l-blue-700 mb-5 text-sm">
+                                        Bookings made outside the availability timing will be <span className="font-medium">cancelled</span> 
+                                    </div>
 
-                        <label htmlFor="name" className="block">Name</label>
-                        <input 
-                            type="text" 
-                            name="name"
-                            placeholder="E.g. John Doe"
-                            className="fs-input w-full mb-3"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                                    <label htmlFor="name" className="block">Name</label>
+                                    <input 
+                                        type="text" 
+                                        name="name"
+                                        placeholder="E.g. John Doe"
+                                        className="fs-input w-full mb-3"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
 
-                        <label htmlFor="contact" className="block">Contact (email/ mobile phone)</label>
-                        <input 
-                            type="text" 
-                            name="contact"
-                            placeholder=""
-                            className="fs-input w-full mb-3"
-                            value={contact}
-                            onChange={(e) => setContact(e.target.value)}
-                        />
+                                    <label htmlFor="contact" className="block">Contact (email/ mobile phone)</label>
+                                    <input 
+                                        type="text" 
+                                        name="contact"
+                                        placeholder=""
+                                        className="fs-input w-full mb-3"
+                                        value={contact}
+                                        onChange={(e) => setContact(e.target.value)}
+                                    />
 
-                        <div className="grid grid-cols-2 gap-3">
-                            <div>
-                                <label htmlFor="date" className="block">Date</label>
-                                <input 
-                                    type="date" 
-                                    name="date"
-                                    placeholder=""
-                                    className="fs-input w-full mb-3"
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
-                                />
-                            </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label htmlFor="date" className="block">Date</label>
+                                            <input 
+                                                type="date" 
+                                                name="date"
+                                                placeholder=""
+                                                className="fs-input w-full mb-3"
+                                                value={date}
+                                                onChange={(e) => setDate(e.target.value)}
+                                            />
+                                        </div>
 
-                            <div>
-                                <label htmlFor="time" className="block">Time</label>
-                                <input 
-                                    type="time" 
-                                    name="time"
-                                    placeholder=""
-                                    className="fs-input w-full mb-3"
-                                    value={time}
-                                    onChange={(e) => setTime(e.target.value)}
-                                />
-                            </div>
-                        </div>
+                                        <div>
+                                            <label htmlFor="time" className="block">Time</label>
+                                            <input 
+                                                type="time" 
+                                                name="time"
+                                                placeholder=""
+                                                className="fs-input w-full mb-3"
+                                                value={time}
+                                                onChange={(e) => setTime(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
 
-                        {hasError !== null && (
-                            <div className="px-3.5 py-2 rounded-sm bg-red-50 border-l-2 border-l-red-700 text-red-700 mb-5 mt-2 text-sm">
-                                {hasError}
-                            </div>
-                        )}
+                                    <label htmlFor="purpose" className="block">Purpose</label>
+                                    <input 
+                                        type="text" 
+                                        name="purpose"
+                                        placeholder="E.g. lunch appointment"
+                                        className="fs-input w-full mb-3"
+                                        value={purpose}
+                                        onChange={(e) => setPurpose(e.target.value)}
+                                    />
 
-                        <div className="mt-5">
-                            <button 
-                                type="button"
-                                className="fs-btn-primary w-full block mb-3"
-                                onClick={() => {
-                                    // bookingModal?.current?.close();
-                                    createBooking();
-                                }}
-                                disabled={createBookingIsLoading}
-                            >
-                                {createBookingIsLoading ? "Loading..." : "Submit"}
-                            </button>
-                            <button 
-                                type="button"
-                                className="fs-btn-plain w-full block"
-                                onClick={() => bookingModal?.current?.close()}
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </div>
+                                    {hasError !== null && (
+                                        <div className="px-3.5 py-2 rounded-sm bg-red-50 border-l-2 border-l-red-700 text-red-700 mb-5 mt-2 text-sm">
+                                            {hasError}
+                                        </div>
+                                    )}
+
+                                    <div className="mt-5">
+                                        <button 
+                                            type="button"
+                                            className="fs-btn-primary w-full block mb-3"
+                                            onClick={() => {
+                                                // bookingModal?.current?.close();
+                                                createBooking();
+                                            }}
+                                            disabled={createBookingIsLoading}
+                                        >
+                                            {createBookingIsLoading ? "Loading..." : "Submit"}
+                                        </button>
+                                        <button 
+                                            type="button"
+                                            className="fs-btn-plain w-full block"
+                                            onClick={() => bookingModal?.current?.close()}
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
                             </dialog>
                         </>
                     ) : (

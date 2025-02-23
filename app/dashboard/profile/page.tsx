@@ -35,7 +35,7 @@ export default function page() {
         <label htmlFor="email" className="block mt-3">Email</label>
         <input
             name="email"
-            className="px-3.5 py-2 border w-full rounded-md mb-3"
+            className="px-3.5 py-2 border w-full rounded-md"
             defaultValue={auth?.currentUser?.email!}
             disabled
         />

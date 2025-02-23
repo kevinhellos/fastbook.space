@@ -3,6 +3,8 @@
 import { ApprovedBadge, PendingBadge, RejectedBadge } from "@/components/Badges";
 import CenterLoader from "@/components/CenterLoader";
 import useGetBookingDetailsById from "@/hooks/bookings/useGetBookingDetailsById"
+import { Booking } from "@/interfaces";
+import { DocumentData } from "firebase/firestore";
 import { CheckCircle } from "lucide-react"
 // import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,13 +14,13 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Pageclient({ id } : { id: string }) {
 
   const getBookingDetailsById = useGetBookingDetailsById;
-  const [bookingDetails, setBookingDetails] = useState<any>(null);
+  const [bookingDetails, setBookingDetails] = useState<Booking|null|DocumentData>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
   async function loadBookingDetails() {
-    const booking = await getBookingDetailsById(id);
+    const booking: Booking|DocumentData|null = await getBookingDetailsById(id);
     // console.log(booking);
     if (booking) {
       setBookingDetails(booking);
@@ -76,6 +78,10 @@ export default function Pageclient({ id } : { id: string }) {
                     <td>{bookingDetails?.time}</td>
                   </tr>
                   <tr>
+                    <td>Purpose</td>
+                    <td>{bookingDetails?.purpose}</td>
+                  </tr>
+                  <tr>
                     <td>Status</td>
                     <td>
                       {bookingDetails?.status == "Pending" && (
@@ -110,14 +116,14 @@ export default function Pageclient({ id } : { id: string }) {
               </table>
             </div>
 
-            {bookingDetails?.status == "Rejected" && (
+            {/* {bookingDetails?.status == "Rejected" && (
               <div className="bg-gray-50 rounded-sm px-3 py-2">
                 <span className="text-sm block font-medium">Comment by host:</span>
                 <p className="text-sm">
                   {bookingDetails?.commentByHost}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
           
           {bookingDetails?.status == "Rejected" && (

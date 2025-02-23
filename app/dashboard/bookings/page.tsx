@@ -2,6 +2,7 @@
 
 import AvailabilitySettings from "@/components/AvailabilitySettings";
 import CenterLoader from "@/components/CenterLoader";
+import NoBookings from "@/components/NoBookings";
 import { auth } from "@/config/firebase";
 import { useDeleteBookingById } from "@/hooks/bookings/useDeleteBookingById";
 import useUpdateBookingStatusById from "@/hooks/bookings/useUpdateBookingStatusById";
@@ -34,6 +35,18 @@ export default function page() {
     loadAllHostBookings();
   }, []);
 
+  const [copied, setCopied] = useState<boolean>(false);
+  const copyToClipboard = async (textToCopy: string) => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset message after 2 seconds
+    } 
+    catch (err) {
+      console.error("Failed to copy text:", err);
+    }
+  };
+
   return (
     <>
 
@@ -62,19 +75,18 @@ export default function page() {
 
       {bookings.length == 0 ? (
         <>
-          {bookingIsLoading ? (
-            <CenterLoader/>
-          ) : (
-            <div className="border mt-5 text-center rounded-md">
-              <h2 className="text-2xl mt-10 overflow text-gray-700">No bookings for now</h2>
-              <p className="text-sm text-gray-700">Have a good day ahead</p>
-              <img 
-                src="/assets/imgs/empty-state.svg" 
-                alt="No bookings" 
-                width={200}
-                className="mx-auto w-48 lg:w-96"
-              />
-            </div>
+          {bookingIsLoading ? <CenterLoader/> : (
+            <NoBookings>
+              <button
+                type="button"
+                className="fs-btn-plain mt-3"
+                onClick={() => {
+                  copyToClipboard(`${window.location.origin}/u/${auth?.currentUser?.uid}`);
+                }}
+              >
+                {copied ? "Copied to clipboard" : "Copy booking link"}
+              </button>
+            </NoBookings>
           )}
         </> 
       ) : (
@@ -90,6 +102,7 @@ export default function page() {
                   <th className="font-medium text-black">Contact </th>
                   <th className="font-medium text-black">Date</th>
                   <th className="font-medium text-black">Time</th>
+                  <th className="font-medium text-black">Purpose</th>
                   <th className="font-medium text-black">Status</th>
                   <th className="font-medium text-black">Action</th>
                 </tr>
@@ -111,6 +124,7 @@ export default function page() {
                   <td>{booking.contact}</td>
                   <td>{booking.date}</td>
                   <td>{booking.time}</td>
+                  <td>{booking.purpose}</td>
                   <td>
                     <select 
                       className={`fs-btn-plain font-medium
