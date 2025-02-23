@@ -71,3 +71,21 @@ body {
 .modal-box {
   border-radius: .475rem !important;
 }
+
+.fs-badge {
+  @apply
+  px-2 py-1 rounded-md font-medium flex w-fit
+
+}
+.fs-badge-yellow {
+  @apply
+  fs-badge bg-yellow-50 text-yellow-700 
+}
+.fs-badge-green {
+  @apply
+  fs-badge bg-green-50 text-green-700
+}
+.fs-badge-red {
+  @apply
+  fs-badge bg-red-50 text-red-700
+}

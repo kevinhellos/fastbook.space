@@ -44,11 +44,20 @@ export default function page() {
           */}
         </div>
 
-        <img 
+        {/* <img 
           src="/assets/imgs/landing.svg" 
           alt="Man writing on a calendar" 
           className="mx-auto mt-10 w-72 lg:w-96"
-        />
+        /> */}
+
+        <div className="mockup-browser rounded-md mx-auto justify-center max-w-xl border mt-5">
+          <div className="mockup-browser-toolbar">
+            <div className="input rounded-sm bg-gray-50 border">Fastbook</div>
+          </div>
+          <div className="">
+            <img src="/assets/imgs/fb-bookings.png" alt="" />
+          </div>
+        </div>
         
       </div>
     </>

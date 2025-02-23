@@ -22,7 +22,7 @@ export default function page() {
   return (
     <div className="text-center mt-[10vh]">
       <h1 className="lg:text-4xl text-2xl font-medium mb-5">Login</h1>
-      <p className="max-w-md mx-auto mb-5">Sign in to manage/ join events</p>
+      <p className="max-w-md mx-auto mb-5">Sign in to manage bookings</p>
       <button 
         type="button" 
         className="fs-btn-plain flex mx-auto"
@@ -30,7 +30,7 @@ export default function page() {
       >
         <img
           src="/assets/imgs/google.png"
-          alt=""
+          alt="Google icon"
           width={25}
           height={25}
           className="me-2"
