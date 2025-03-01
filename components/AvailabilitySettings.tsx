@@ -67,7 +67,7 @@ export default function AvailabilitySettings() {
     <>
       <button
         type="button"
-        className="fs-btn-plain flex mt-5"
+        className="fs-btn-secondary flex mt-5"
         onClick={() => availabilityModal?.current?.showModal()}
       >
         <CalendarCog size={20} strokeWidth={1.5} className="me-2" />

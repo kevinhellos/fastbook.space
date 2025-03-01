@@ -8,7 +8,7 @@ import { useDeleteBookingById } from "@/hooks/bookings/useDeleteBookingById";
 import useUpdateBookingStatusById from "@/hooks/bookings/useUpdateBookingStatusById";
 import { useGetAllHostBookings } from "@/hooks/users/useGetAllHostBookings";
 import { Booking } from "@/interfaces";
-import { Laptop, Trash } from "lucide-react";
+import { Laptop, RefreshCcw, Trash } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -23,6 +23,7 @@ export default function page() {
   const [bookingIsLoading, setBookingIsLoading] = useState<boolean>(false);
 
   async function loadAllHostBookings() {
+    setBookings([]);
     setBookingIsLoading(true);
     const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
     if (bookings) {
@@ -59,6 +60,15 @@ export default function page() {
       </div> */}
 
       <div className="flex gap-3">
+
+        <button
+          type="button"
+          className="fs-btn-secondary flex mt-5"
+          onClick={loadAllHostBookings}
+        >
+          <RefreshCcw size={20} strokeWidth={1.5} className="me-2" />
+          Refresh
+        </button>
 
         <AvailabilitySettings/>
 
@@ -134,10 +144,12 @@ export default function page() {
                       `}
                       value={booking.status}
                       onChange={async(e) => {
-                        toast.loading("Updating booking status", { duration: 1000 });
+                        toast.loading("Updating booking status", { duration: 2000 });
                         await updateBookingStatusById(booking.id!, e.target.value)
                         .then(() => {
-                          loadAllHostBookings();
+                          setTimeout(() => {
+                            loadAllHostBookings();
+                          }, 1000);
                         })
                       }}
                     >
@@ -149,7 +161,7 @@ export default function page() {
                   <td className="flex gap-2">
                     <button 
                       type="button" 
-                      className="fs-btn-plain hover:bg-red-50 hover:text-red-700"
+                      className="fs-btn-secondary hover:bg-red-50 hover:text-red-700"
                       onClick={async() => {
                         toast.loading("Deleting...", { duration: 1000 })
                         await deleteBookingById(booking.id!)

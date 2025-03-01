@@ -23,7 +23,7 @@ export default function Navbar() {
   }, [router]);
 
   return (
-    <div className="navbar border-b px-5">
+    <div className="navbar shadow-sm border-b px-5">
       <div className="flex-1">
         <Link 
           href="/"

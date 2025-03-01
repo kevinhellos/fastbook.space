@@ -25,17 +25,25 @@ body {
   text-black
 }
 
+.rounded-md {
+  border-radius: .275rem !important;
+}
+
 .fs-btn {
   @apply
   px-3.5 py-2 rounded-md cursor-pointer tracking-normal
 }
+.fs-btn {
+  font-size: .95rem !important;
+}
+
 .fs-btn-primary {
   @apply
   fs-btn bg-blue-700 hover:bg-blue-800 text-white
 }
 .fs-btn-secondary {
   @apply
-  fs-btn bg-blue-50 hover:bg-blue-100 text-blue-700
+  fs-btn bg-white border border-blue-700 hover:bg-blue-50 text-blue-700
 }
 .fs-btn-red {
   @apply
@@ -48,7 +56,7 @@ body {
 
 .fs-sidebar-link {
   @apply
-  px-5 py-2 hover:bg-blue-50 rounded-md mb-3 cursor-pointer
+  px-5 py-2.5 hover:bg-blue-50 rounded-md mb-3 cursor-pointer
 }
 .fs-sidebar-link-active {
   @apply
