@@ -37,7 +37,7 @@ export default function page() {
     const [bookings, setBookings] = useState<Booking[]|null>(null);
 
     async function loadAllHostBookings() {
-      const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
+    const bookings = await getAllHostBookings(auth?.currentUser?.uid!);
       if (bookings) {
         setBookings(bookings);
       }

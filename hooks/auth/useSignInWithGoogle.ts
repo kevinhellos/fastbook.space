@@ -1,4 +1,3 @@
-
 import { auth } from "@/config/firebase";
 import { signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth";
 
@@ -11,7 +10,8 @@ export async function useSignInWithGoogle() {
       if (!result) {
         console.error("Error: failed logging in...");
       }
-      // const token = credential.accessToken;.
+      // const token = credential?.accessToken;
+      // console.log(token);
       // const user = result.user;
     })
     .catch((error: any) => {

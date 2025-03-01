@@ -27,7 +27,7 @@ body {
 
 .fs-btn {
   @apply
-  px-3.5 py-2 rounded-md cursor-pointer
+  px-3.5 py-2 rounded-md cursor-pointer tracking-normal
 }
 .fs-btn-primary {
   @apply
@@ -52,7 +52,7 @@ body {
 }
 .fs-sidebar-link-active {
   @apply
-  bg-blue-50 text-blue-700 font-medium
+  bg-blue-50 text-blue-700 font-medium 
 }
 .fs-sidebar-link-red {
   @apply
@@ -88,4 +88,9 @@ body {
 .fs-badge-red {
   @apply
   fs-badge bg-red-50 text-red-700
+}
+
+.fs-booking-card {
+  @apply
+  mx-auto h-auto max-w-2xl border rounded-md mt-0 p-3 shadow-md
 }

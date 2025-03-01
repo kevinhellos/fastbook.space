@@ -107,7 +107,7 @@ export default function Pageclient({ uid } : { uid: string }) {
         return (
             <>
                 <Toaster/>
-                <div className="mx-auto max-w-2xl border rounded-md mt-0 p-3 shadow-md">
+                <div className="fs-booking-card">
                     <h1 className="text-sm text-center font-medium mt-3">
                         Make a Booking for
                     </h1>

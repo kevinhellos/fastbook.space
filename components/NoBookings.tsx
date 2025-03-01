@@ -2,7 +2,7 @@ import React from "react";
 
 export default function NoBookings({ children } : { children?: React.ReactNode}) {
   return (
-    <div className="border mt-5 text-center rounded-md">
+    <div className="border mt-5 text-center rounded-md shadow-md">
       <h2 className="text-2xl mt-10 overflow text-gray-700">No bookings for now</h2>
       <p className="text-sm text-gray-700">Have a good day ahead</p>
       {children}
