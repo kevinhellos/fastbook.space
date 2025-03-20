@@ -17,10 +17,20 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [user, setUser] = useState<any>();
+
   useEffect(() => {
     // setTimeout(() => {
       const unsubscribe: Unsubscribe = onAuthStateChanged(auth, (user) => {
-        !user ? router.push(`/login?next=${pathname}`) : setIsAuthenticated(true);
+        // !user ? router.push(`/login?next=${pathname}`) : setIsAuthenticated(true);
+        if (user) {
+          setIsAuthenticated(true);
+          setUser(user);
+        }
+        else {
+          setIsAuthenticated(false);
+          router.push(`/login?next=${pathname}`)
+        }
         setLoading(false);
       });
       return () => unsubscribe();
